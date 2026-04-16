@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Electric Boogaloo Project Bingo 2025 — District 7020</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Georgia', 'Times New Roman', serif; background: linear-gradient(135deg, #0a0a1a 0%, #0d1b2a 50%, #0a1628 100%); min-height: 100vh; color: #e2e8f0; }
+#header { background: linear-gradient(90deg, #e8425a, #c1174e); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 24px rgba(232,66,90,0.4); gap: 12px; flex-wrap: wrap; }
+#header .subtitle { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.85; margin-bottom: 2px; font-family: sans-serif; }
+#header .title { font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+#header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.meta { text-align: right; font-size: 12px; opacity: 0.85; font-family: sans-serif; }
+.meta-badge { margin-top: 4px; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 3px 12px; display: inline-block; }
+#lang-toggle { display: flex; align-items: center; background: rgba(0,0,0,0.2); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2); }
+.lang-btn { padding: 5px 14px; font-size: 12px; font-family: sans-serif; background: transparent; color: rgba(255,255,255,0.75); border: none; cursor: pointer; transition: all 0.2s; font-weight: 600; letter-spacing: 0.5px; }
+.lang-btn.active { background: rgba(255,255,255,0.25); color: #fff; }
+.lang-btn:hover:not(.active) { background: rgba(255,255,255,0.1); color: #fff; }
+#layout { display: flex; min-height: calc(100vh - 70px); }
+#sidebar { width: 252px; min-width: 252px; background: rgba(255,255,255,0.04); border-right: 1px solid rgba(255,255,255,0.08); padding: 20px 0; overflow-y: auto; }
+.sidebar-heading { padding: 0 16px 12px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #e8425a; font-family: sans-serif; }
+.club-item { padding: 9px 16px; cursor: pointer; border-left: 3px solid transparent; transition: all 0.15s; display: flex; align-items: center; gap: 10px; }
+.club-item:hover { background: rgba(232,66,90,0.08); }
+.club-item.active { background: rgba(232,66,90,0.15); border-left-color: #e8425a; }
+.rank-badge { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; font-family: sans-serif; flex-shrink: 0; }
+.rank-1 { background: linear-gradient(135deg,#FFD700,#FFA500); color: #000; }
+.rank-2 { background: linear-gradient(135deg,#C0C0C0,#888); color: #000; }
+.rank-3 { background: linear-gradient(135deg,#CD7F32,#8B4513); color: #000; }
+.rank-other { background: rgba(255,255,255,0.1); color: #aaa; }
+.club-info { flex: 1; overflow: hidden; }
+.club-name-row { display: flex; align-items: center; gap: 5px; }
+.club-name-text { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; }
+.club-item.active .club-name-text { font-weight: bold; }
+.bingo-pills { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 3px; }
+.bingo-pill { font-size: 9px; font-family: sans-serif; font-weight: 700; letter-spacing: 0.5px; padding: 1px 6px; border-radius: 10px; background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,165,0,0.15)); border: 1px solid rgba(255,215,0,0.4); color: #FFD700; }
+.progress-bar-wrap { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+.progress-bar-bg { height: 4px; flex: 1; background: rgba(255,255,255,0.1); border-radius: 2px; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg,#e8425a,#ff6b35); border-radius: 2px; transition: width 0.3s; }
+.progress-count { font-size: 11px; font-family: sans-serif; color: #94a3b8; flex-shrink: 0; }
+#main { flex: 1; padding: 24px; overflow-y: auto; }
+.club-header { margin-bottom: 20px; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.club-title { font-size: 20px; font-weight: bold; margin-bottom: 6px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.chip { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-family: sans-serif; }
+.view-btns { display: flex; gap: 8px; }
+.view-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: #e2e8f0; cursor: pointer; font-size: 12px; font-family: sans-serif; transition: all 0.15s; }
+.view-btn.active { background: #e8425a; border-color: #e8425a; }
+#bingo-banner { display: none; margin-bottom: 16px; padding: 14px 20px; border-radius: 12px; background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,140,0,0.08)); border: 1px solid rgba(255,215,0,0.45); font-family: sans-serif; font-weight: bold; color: #FFD700; text-align: center; letter-spacing: 0.5px; }
+#bingo-banner .bingo-lines-detail { margin-top: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.bingo-line-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3); color: #fcd34d; font-weight: 600; }
+.bingo-col-headers { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 8px; }
+.bingo-letter { text-align: center; font-size: 28px; font-weight: bold; color: #e8425a; text-shadow: 0 0 20px rgba(232,66,90,0.5); letter-spacing: 2px; }
+.bingo-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
+.bingo-cell { border-radius: 10px; padding: 12px 10px; text-align: center; border: 2px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); transition: all 0.2s; position: relative; min-height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.cell-check { position: absolute; top: 7px; right: 7px; width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 9px; color: transparent; }
+.cell-category { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.85; margin-bottom: 4px; font-family: sans-serif; font-weight: bold; }
+.cell-task { font-size: 11px; line-height: 1.3; color: #94a3b8; font-family: sans-serif; }
+.bingo-legend { margin-top: 16px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: sans-serif; color: #94a3b8; }
+.legend-swatch { width: 12px; height: 12px; border-radius: 3px; }
+#progress-view { display: flex; gap: 20px; flex-wrap: wrap; }
+.progress-col { flex: 1; min-width: 280px; }
+.section-title { font-size: 13px; font-weight: bold; margin-bottom: 10px; font-family: sans-serif; letter-spacing: 0.5px; }
+.task-cards { display: flex; flex-direction: column; gap: 6px; }
+.task-card { padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); }
+.task-bar { width: 4px; height: 32px; border-radius: 2px; flex-shrink: 0; }
+.task-name { font-size: 12px; font-weight: 600; color: #94a3b8; font-family: sans-serif; }
+.task-meta { font-size: 10px; opacity: 0.85; font-family: sans-serif; margin-top: 1px; }
+.task-bingo-star { font-size: 11px; margin-left: 4px; }
+.extra-label { margin: 8px 0 4px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #f59e0b; font-family: sans-serif; }
+.extra-task { padding: 8px 12px; border-radius: 8px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); font-size: 12px; font-family: sans-serif; color: #fcd34d; }
+.empty-state { padding: 20px; text-align: center; color: #64748b; font-family: sans-serif; font-size: 13px; }
+#grid-view { display: block; }
+@keyframes shimmer { 0% { box-shadow: 0 0 12px rgba(255,215,0,0.3); } 50% { box-shadow: 0 0 24px rgba(255,215,0,0.6); } 100% { box-shadow: 0 0 12px rgba(255,215,0,0.3); } }
+.bingo-line-cell { animation: shimmer 2s ease-in-out infinite; }
+</style>
+</head>
+<body>
+<div id="header">
+  <div>
+    <div class="subtitle">Rotaract District 7020</div>
+    <div class="title">&#9889; Electric Boogaloo Project Bingo 2025</div>
+  </div>
+  <div id="header-right">
+    <div id="lang-toggle">
+      <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="lang-fr" onclick="setLang('fr')">FR</button>
+    </div>
+    <div class="meta">
+      <div id="txt-date"></div>
+      <div class="meta-badge" id="club-count"></div>
+    </div>
+  </div>
+</div>
+<div id="layout">
+  <div id="sidebar">
+    <div class="sidebar-heading" id="txt-leaderboard"></div>
+    <div id="leaderboard-list"></div>
+  </div>
+  <div id="main">
+    <div class="club-header">
+      <div>
+        <div class="club-title" id="selected-club-name"></div>
+        <div class="chips" id="club-chips"></div>
+      </div>
+      <div class="view-btns">
+        <button class="view-btn active" id="btn-grid" onclick="switchView('grid')"></button>
+        <button class="view-btn" id="btn-progress" onclick="switchView('progress')"></button>
+      </div>
+    </div>
+    <div id="bingo-banner"></div>
+    <div id="grid-view">
+      <div class="bingo-col-headers">
+        <div class="bingo-letter">B</div><div class="bingo-letter">I</div><div class="bingo-letter">N</div><div class="bingo-letter">G</div><div class="bingo-letter">O</div>
+      </div>
+      <div class="bingo-grid" id="bingo-grid"></div>
+      <div class="bingo-legend" id="bingo-legend"></div>
+    </div>
+    <div id="progress-view" style="display:none;">
+      <div class="progress-col">
+        <div class="section-title" id="prog-done-title" style="color:#4CAF8C;"></div>
+        <div class="task-cards" id="done-tasks"></div>
+      </div>
+      <div class="progress-col">
+        <div class="section-title" id="prog-out-title" style="color:#e8425a;"></div>
+        <div class="task-cards" id="outstanding-tasks"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const T={en:{date:"As of April 15, 2026",clubsCompeting:n=>`${n} clubs competing`,leaderboard:"🏆 Leaderboard",gridBtn:"🎯 Bingo Grid",progressBtn:"📋 Task Progress",gridTasksComplete:n=>`${n} / 25 Grid Tasks`,submissions:n=>`${n} Submissions`,bingoBadge:n=>`🎉 ${n} BINGO${n>1?"S":""}`,bingoHeader:n=>`🎉 BINGO${n>1?"S":""} ACHIEVED — ${n} winning line${n>1?"s":""}!`,bingoLineLabel:type=>BINGO_LINE_LABELS.en[type]||type,doneTitle:n=>`✅ Completed Grid Tasks (${n}/25)`,outTitle:n=>`⏳ Outstanding Grid Tasks (${n}/25)`,noTasksYet:"No grid tasks completed yet.",allDone:"🎉 All grid tasks complete!",extraLabel:"Additional Submissions (not on grid)",legendLine:"Completed (Bingo Line)",legendDone:"Completed",legendPending:"Not Yet Completed"},fr:{date:"Au 15 avril 2026",clubsCompeting:n=>`${n} clubs en compétition`,leaderboard:"🏆 Classement",gridBtn:"🎯 Grille Bingo",progressBtn:"📋 Avancement des Tâches",gridTasksComplete:n=>`${n} / 25 Tâches`,submissions:n=>`${n} Soumissions`,bingoBadge:n=>`🎉 ${n} BINGO${n>1?"S":""}`,bingoHeader:n=>`🎉 BINGO${n>1?"S":""} OBTENUS — ${n} ligne${n>1?"s":""} gagnante${n>1?"s":""}!`,bingoLineLabel:type=>BINGO_LINE_LABELS.fr[type]||type,doneTitle:n=>`✅ Tâches Complétées (${n}/25)`,outTitle:n=>`⏳ Tâches en Attente (${n}/25)`,noTasksYet:"Aucune tâche de grille complétée pour l'instant.",allDone:"🎉 Toutes les tâches de grille sont complètes !",extraLabel:"Soumissions Supplémentaires (hors grille)",legendLine:"Complétée (Ligne Bingo)",legendDone:"Complétée",legendPending:"Pas encore complétée"}};
+const BINGO_LINE_LABELS={en:{"row-0":"Row 1","row-1":"Row 2","row-2":"Row 3","row-3":"Row 4","row-4":"Row 5","col-0":"Column B","col-1":"Column I","col-2":"Column N","col-3":"Column G","col-4":"Column O","diag-tl":"Diagonal ↘","diag-tr":"Diagonal ↙"},fr:{"row-0":"Ligne 1","row-1":"Ligne 2","row-2":"Ligne 3","row-3":"Ligne 4","row-4":"Ligne 5","col-0":"Colonne B","col-1":"Colonne I","col-2":"Colonne N","col-3":"Colonne G","col-4":"Colonne O","diag-tl":"Diagonale ↘","diag-tr":"Diagonale ↙"}};
+const BINGO_GRID=[[{col:"B",row:1,category:{en:"International Service",fr:"Service International"},task:{en:"#MyIslandCampaign",fr:"#MyIslandCampaign"}},{col:"I",row:1,category:{en:"Wellness",fr:"Bien-être"},task:{en:"Step It Up Challenge",fr:"Défi Step It Up"}},{col:"N",row:1,category:{en:"Environmental Sustainability",fr:"Durabilité Environnementale"},task:{en:"Environmental Clean Up",fr:"Nettoyage Environnemental"}},{col:"G",row:1,category:{en:"Public Image",fr:"Image Publique"},task:{en:"Rotary Zones 33/34 EPIC Award",fr:"Prix EPIC Zones Rotary 33/34"}},{col:"O",row:1,category:{en:"Membership",fr:"Adhésion"},task:{en:"MAP Attendance",fr:"Participation au MAP"}}],[{col:"B",row:2,category:{en:"Diversity, Equity, and Inclusion",fr:"Diversité, Équité et Inclusion"},task:{en:"DEI Campaign",fr:"Campagne DEI"}},{col:"I",row:2,category:{en:"Learning and Development",fr:"Apprentissage et Développement"},task:{en:"Course? Correct!",fr:"Cours ? Correct !"}},{col:"N",row:2,category:{en:"International Service",fr:"Service International"},task:{en:"Friends in Service Initiative",fr:"Initiative d'Amis en Service"}},{col:"G",row:2,category:{en:"Conference",fr:"Conférence"},task:{en:"Conference Registration",fr:"Inscription à la Conférence"}},{col:"O",row:2,category:{en:"Wellness",fr:"Bien-être"},task:{en:"Corporate Wellness Partnership",fr:"Partenariat Bien-être Entreprise"}}],[{col:"B",row:3,category:{en:"Environmental Sustainability",fr:"Durabilité Environnementale"},task:{en:"Take Back Tuesday",fr:"Mardi Reprise"}},{col:"I",row:3,category:{en:"Public Image",fr:"Image Publique"},task:{en:"Public Image Webinars",fr:"Webinaires d'Image Publique"}},{col:"N",row:3,category:{en:"Membership",fr:"Adhésion"},task:{en:"neXus Membership Amplifier",fr:"Amplificateur d'Adhésion neXus"}},{col:"G",row:3,category:{en:"Club Administration",fr:"Administration du Club"},task:{en:"Service Project Center",fr:"Centre de Projets de Service"}},{col:"O",row:3,category:{en:"International Service",fr:"Service International"},task:{en:"12 Days of Kindness",fr:"12 Jours de Gentillesse"}}],[{col:"B",row:4,category:{en:"Fundraising",fr:"Collecte de Fonds"},task:{en:"District Fundraising",fr:"Collecte de Fonds du District"}},{col:"I",row:4,category:{en:"Membership",fr:"Adhésion"},task:{en:"Camaraderie!",fr:"Camaraderie !"}},{col:"N",row:4,category:{en:"Club Administration",fr:"Administration du Club"},task:{en:"Planning Meetings",fr:"Réunions de Planification"}},{col:"G",row:4,category:{en:"Wellness",fr:"Bien-être"},task:{en:"Club Self-Care",fr:"Bien-être au sein du Club"}},{col:"O",row:4,category:{en:"Disaster Response",fr:"Réponse aux Catastrophes"},task:{en:"Sustainability Week",fr:"Semaine de Durabilité"}}],[{col:"B",row:5,category:{en:"Rotary Foundation",fr:"Fondation Rotary"},task:{en:"Grant Application",fr:"Demande de Subvention"}},{col:"I",row:5,category:{en:"Foundation and Disaster Risk Management",fr:"Fondation et Gestion des Risques"},task:{en:"The #TRF Donation",fr:"Le Don #TRF"}},{col:"N",row:5,category:{en:"Disaster Risk Management",fr:"Gestion des Risques de Catastrophe"},task:{en:"Emergency Response Training",fr:"Formation à la Réponse d'Urgence"}},{col:"G",row:5,category:{en:"Public Image",fr:"Image Publique"},task:{en:"ROAR",fr:"RUGIR"}},{col:"O",row:5,category:{en:"Membership",fr:"Adhésion"},task:{en:"Family of Rotary",fr:"Famille du Rotary"}}]];
+const ALL_CELLS=BINGO_GRID.flat();
+const SUBMISSION_DATA={"Rotaract Club of Grand Turk":["#MyIslandCampaign","12 Days of Kindness","Camaraderie!","Club Self-Care","Conference Registration","Corporate Wellness Partnership","Course? Correct!","DEI Campaign","District Fundraising","Emergency Response Training","Environmental Clean Up","Family of Rotary","Friends in Service Initiative","Grant Application","MAP Attendance","Planning Meetings","Public Image Webinars","ROAR","Rotary Zones 33/34 EPIC Award","Service Project Center","Step It Up Challenge","Sustainability Week","Take Back Tuesday","The #TRF Donation","neXus Membership Amplifier"],"South East Nassau Centennial":["#MyIslandCampaign","12 Days of Kindness","Camaraderie!","Club Self-Care","Conference Registration","Corporate Wellness Partnership","Course? Correct!","DEI Campaign","District Fundraising","Environmental Clean Up","Family of Rotary","Friends in Service Initiative","Grant Application","MAP Attendance","Planning Meetings","Public Image Webinars","Rotary Zones 33/34 EPIC Award","Service Project Center","Step It Up Challenge","Sustainability Week","Take Back Tuesday","The #TRF Donation"],"Rotaract Club of Mandeville":["#MyIslandCampaign","12 Days of Kindness","Camaraderie!","Club Self-Care","Conference Registration","Corporate Wellness Partnership","Course? Correct!","DEI Campaign","Environmental Clean Up","Family of Rotary","Friends in Service Initiative","Grant Application","MAP Attendance","ROAR","Rotary Zones 33/34 EPIC Award","Step It Up Challenge","Take Back Tuesday","The #TRF Donation","neXus Membership Amplifier"],"Rotaract Club of New Kingston":["#MyIslandCampaign","12 Days of Kindness","Camaraderie!","DEI Campaign","District Fundraising","Emergency Response Training","Environmental Clean Up","Family of Rotary","Friends in Service Initiative","Grant Application","Planning Meetings","Rotary Zones 33/34 EPIC Award","Service Project Center","Step It Up Challenge","Take Back Tuesday","The #TRF Donation"],"Rotaract Club of Nassau Sunset":["#MyIslandCampaign","12 Days of Kindness","Club Self-Care","Conference Registration","Corporate Wellness Partnership","District Fundraising","Environmental Clean Up","Family of Rotary","Friends in Service Initiative","Grant Application","MAP Attendance","Rotary Zones 33/34 EPIC Award","Service Project Center","Step It Up Challenge","Sustainability Week","Take Back Tuesday","The #TRF Donation"],"Rotaract Club Port-au-Prince Champ de Mars":["#MyIslandCampaign","12 Days of Kindness","Club Self-Care","DEI Campaign","Environmental Clean Up","Friends in Service Initiative","Grant Application","MAP Attendance","Take Back Tuesday"],"Rotaract Club of Kingston":["#MyIslandCampaign","12 Days of Kindness","Environmental Clean Up","Friends in Service Initiative","The #TRF Donation"],"Rotaract Club du Cap-Haïtien":["Club Self-Care","Corporate Wellness Partnership","Friends in Service Initiative","Step It Up Challenge"],"Rotaract Club de Delmas":["Friends in Service Initiative","MAP Attendance","Public Image Webinars"],"Rotaract Club Mémorial des Gonaïves":["Family of Rotary","Friends in Service Initiative"],"Rotaract Club of East Nassau":["Club Self-Care","Environmental Clean Up"],"Rotaract Club de Pignon":["Club Self-Care"],"Rotaract Club of Liguanea Plains":["Grant Application"],"Rotaract Club Providenciales":["Grant Application"],"Rotaract E-Club Haiti Global":["Friends in Service Initiative"],"Rotaract Club of Church Teachers' College Mandeville":["Step It Up Challenge"]};
+const CAT_COLORS={"International Service":"#e8425a","Wellness":"#4CAF8C","Environmental Sustainability":"#56A060","Public Image":"#3B82F6","Membership":"#8B5CF6","Diversity, Equity, and Inclusion":"#F59E0B","Learning and Development":"#06B6D4","Conference":"#6366F1","Fundraising":"#EC4899","Club Administration":"#64748B","Disaster Response":"#EF4444","Rotary Foundation":"#0EA5E9","Foundation and Disaster Risk Management":"#0EA5E9","Disaster Risk Management":"#EF4444"};
+let lang="en",selectedClub=Object.keys(SUBMISSION_DATA)[0],currentView="grid";
+function tFn(k){return T[lang][k];}
+function getCatColor(c){return CAT_COLORS[c]||"#9CA3AF";}
+function cellTaskEn(c){return c.task.en;}
+function cellTaskDisplay(c){return c.task[lang];}
+function cellCatDisplay(c){return c.category[lang];}
+function hexToRgba(hex,a){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgba(${r},${g},${b},${a})`;}
+function shortName(n){return n.replace("Rotaract Club of ","RC ").replace("Rotaract Club ","RC ").replace("Rotaract ","").replace("South East Nassau Centennial","SE Nassau Centennial");}
+function getCompleted(club){return new Set(SUBMISSION_DATA[club]||[]);}
+function checkBingo(s){const ok=c=>s.has(cellTaskEn(c)),lines=[];for(let r=0;r<5;r++)if(BINGO_GRID[r].every(ok))lines.push(`row-${r}`);for(let c=0;c<5;c++)if(BINGO_GRID.every(row=>ok(row[c])))lines.push(`col-${c}`);if([0,1,2,3,4].every(i=>ok(BINGO_GRID[i][i])))lines.push("diag-tl");if([0,1,2,3,4].every(i=>ok(BINGO_GRID[i][4-i])))lines.push("diag-tr");return lines;}
+function isBingoCell(cell,lines){const ci=["B","I","N","G","O"].indexOf(cell.col),r=cell.row-1;return lines.includes(`row-${r}`)||lines.includes(`col-${ci}`)||(lines.includes("diag-tl")&&ci===r)||(lines.includes("diag-tr")&&ci===4-r);}
+function getLeaderboard(){return Object.entries(SUBMISSION_DATA).map(([club,tasks])=>{const completed=new Set(tasks),bingoLines=checkBingo(completed),gridMatches=ALL_CELLS.filter(c=>completed.has(cellTaskEn(c))).length;return{club,gridMatches,bingoLines};}).sort((a,b)=>b.gridMatches-a.gridMatches||b.bingoLines.length-a.bingoLines.length);}
+function renderStatic(){document.getElementById("txt-date").textContent=tFn("date");document.getElementById("txt-leaderboard").textContent=tFn("leaderboard");document.getElementById("btn-grid").textContent=tFn("gridBtn");document.getElementById("btn-progress").textContent=tFn("progressBtn");document.getElementById("club-count").textContent=T[lang].clubsCompeting(Object.keys(SUBMISSION_DATA).length);document.getElementById("bingo-legend").innerHTML=`<div class="legend-item"><div class="legend-swatch" style="background:#FFD700;border:2px solid #FFD700;"></div>${tFn("legendLine")}</div><div class="legend-item"><div class="legend-swatch" style="background:#4CAF8C;border:2px solid #4CAF8C;"></div>${tFn("legendDone")}</div><div class="legend-item"><div class="legend-swatch" style="background:transparent;border:2px solid #334155;"></div>${tFn("legendPending")}</div>`;}
+function renderLeaderboard(){const lb=getLeaderboard(),list=document.getElementById("leaderboard-list");list.innerHTML="";lb.forEach(({club,gridMatches,bingoLines},idx)=>{const div=document.createElement("div");div.className="club-item"+(club===selectedClub?" active":"");div.onclick=()=>selectClub(club);const rc=idx===0?"rank-1":idx===1?"rank-2":idx===2?"rank-3":"rank-other";const pill=bingoLines.length>0?`<div class="bingo-pills"><div class="bingo-pill">🎉 ${bingoLines.length} BINGO${bingoLines.length>1?"S":""}</div></div>`:"";div.innerHTML=`<div class="rank-badge ${rc}">${idx+1}</div><div class="club-info"><div class="club-name-row"><div class="club-name-text">${shortName(club)}</div></div>${pill}<div class="progress-bar-wrap"><div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${(gridMatches/25)*100}%"></div></div><div class="progress-count">${gridMatches}/25</div></div></div>`;list.appendChild(div);});}
+function renderClubHeader(){const completed=getCompleted(selectedClub),bingoLines=checkBingo(completed),gridMatches=ALL_CELLS.filter(c=>completed.has(cellTaskEn(c))).length;document.getElementById("selected-club-name").textContent=selectedClub;const bingoChip=bingoLines.length>0?`<div class="chip" style="background:rgba(255,215,0,0.13);border:1px solid rgba(255,215,0,0.4);color:#FFD700;font-weight:700;">${T[lang].bingoBadge(bingoLines.length)}</div>`:"";document.getElementById("club-chips").innerHTML=`<div class="chip" style="background:rgba(232,66,90,0.13);border:1px solid rgba(232,66,90,0.33);">${T[lang].gridTasksComplete(gridMatches)}</div><div class="chip" style="background:rgba(76,175,140,0.13);border:1px solid rgba(76,175,140,0.33);">${T[lang].submissions(completed.size)}</div>${bingoChip}`;const banner=document.getElementById("bingo-banner");if(bingoLines.length>0){banner.style.display="block";banner.innerHTML=`<div style="font-size:15px;">${T[lang].bingoHeader(bingoLines.length)}</div><div class="bingo-lines-detail">${bingoLines.map(l=>`<span class="bingo-line-tag">${T[lang].bingoLineLabel(l)}</span>`).join("")}</div>`;}else banner.style.display="none";}
+function renderGrid(){const completed=getCompleted(selectedClub),bingoLines=checkBingo(completed),grid=document.getElementById("bingo-grid");grid.innerHTML="";ALL_CELLS.forEach(cell=>{const isDone=completed.has(cellTaskEn(cell)),isLine=isDone&&isBingoCell(cell,bingoLines),catColor=getCatColor(cell.category.en),dispCat=cellCatDisplay(cell),shortCat=dispCat.length>20?dispCat.substring(0,19)+"…":dispCat,div=document.createElement("div");div.className="bingo-cell"+(isLine?" bingo-line-cell":"");let bg,border,shadow;if(isLine){bg="linear-gradient(135deg,rgba(255,215,0,0.18),rgba(255,140,0,0.1))";border="2px solid rgba(255,215,0,0.7)";shadow="0 0 20px rgba(255,215,0,0.35)";}else if(isDone){bg=hexToRgba(catColor,0.1);border=`2px solid ${hexToRgba(catColor,0.45)}`;shadow=`0 0 8px ${hexToRgba(catColor,0.15)}`;}else{bg="rgba(255,255,255,0.03)";border="2px solid rgba(255,255,255,0.07)";shadow="none";}div.style.cssText=`background:${bg};border:${border};box-shadow:${shadow};`;div.innerHTML=`<div class="cell-check" style="background:${isLine?"#FFD700":isDone?catColor:"rgba(255,255,255,0.08)"};color:${isLine?"#000":isDone?"#fff":"transparent"};font-size:${isLine?"8px":"9px"};">${isLine?"★":isDone?"✓":""}</div><div class="cell-category" style="color:${isLine?"#FFD700":catColor};">${shortCat}</div><div class="cell-task" style="color:${isDone?"#f0f4f8":"#94a3b8"};font-weight:${isDone?"600":"normal"};">${cellTaskDisplay(cell)}</div>`;grid.appendChild(div);});}
+function renderProgress(){const completed=getCompleted(selectedClub),bingoLines=checkBingo(completed),allTasks=ALL_CELLS.map(c=>({...c,done:completed.has(cellTaskEn(c)),isLine:completed.has(cellTaskEn(c))&&isBingoCell(c,bingoLines)})),doneTasks=allTasks.filter(t=>t.done),outstanding=allTasks.filter(t=>!t.done),gridEn=new Set(ALL_CELLS.map(c=>cellTaskEn(c))),extra=(SUBMISSION_DATA[selectedClub]||[]).filter(t=>!gridEn.has(t));document.getElementById("prog-done-title").textContent=T[lang].doneTitle(doneTasks.length);document.getElementById("prog-out-title").textContent=T[lang].outTitle(outstanding.length);const doneEl=document.getElementById("done-tasks");doneEl.innerHTML="";if(!doneTasks.length)doneEl.innerHTML=`<div class="empty-state">${tFn("noTasksYet")}</div>`;else doneTasks.forEach(c=>doneEl.appendChild(makeTaskCard(c,true)));if(extra.length){const l=document.createElement("div");l.className="extra-label";l.textContent=tFn("extraLabel");doneEl.appendChild(l);extra.forEach(t=>{const d=document.createElement("div");d.className="extra-task";d.textContent=t;doneEl.appendChild(d);});}const outEl=document.getElementById("outstanding-tasks");outEl.innerHTML="";if(!outstanding.length)outEl.innerHTML=`<div class="empty-state">${tFn("allDone")}</div>`;else outstanding.forEach(c=>outEl.appendChild(makeTaskCard(c,false)));}
+function makeTaskCard(cell,done){const catColor=getCatColor(cell.category.en),isLine=done&&cell.isLine,div=document.createElement("div");div.className="task-card";if(isLine){div.style.background="rgba(255,215,0,0.07)";div.style.borderColor="rgba(255,215,0,0.3)";}else if(done){div.style.background=hexToRgba(catColor,0.07);div.style.borderColor=hexToRgba(catColor,0.27);}div.innerHTML=`<div class="task-bar" style="background:${isLine?"#FFD700":catColor};"></div><div style="flex:1;overflow:hidden;"><div class="task-name" style="color:${done?"#f0f4f8":"#94a3b8"};">${cellTaskDisplay(cell)}${isLine?'<span class="task-bingo-star">⭐</span>':""}</div><div class="task-meta" style="color:${isLine?"#FFD700":catColor};">${cellCatDisplay(cell)} · ${cell.col}${cell.row}</div></div>`;return div;}
+function selectClub(club){selectedClub=club;renderAll();}
+function switchView(v){currentView=v;document.getElementById("grid-view").style.display=v==="grid"?"block":"none";document.getElementById("progress-view").style.display=v==="progress"?"flex":"none";document.getElementById("btn-grid").classList.toggle("active",v==="grid");document.getElementById("btn-progress").classList.toggle("active",v==="progress");if(v==="progress")renderProgress();}
+function setLang(l){lang=l;document.getElementById("lang-en").classList.toggle("active",l==="en");document.getElementById("lang-fr").classList.toggle("active",l==="fr");renderAll();}
+function renderAll(){renderStatic();renderLeaderboard();renderClubHeader();renderGrid();if(currentView==="progress")renderProgress();}
+renderAll();
+</script>
+</body>
+</html>
